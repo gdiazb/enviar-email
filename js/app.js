@@ -31,19 +31,20 @@ function iniciarApp() {
 function validarFormulario(e) {
   //campo obligatorio
   campoObligatorio(e)
-  if(e.target.type === 'email') { //si el campo es de type email
-    campoTypeEmail(e)
-  }
 }
 
 function campoObligatorio(e) {
   if(e.target.value.length > 0) { // si el campo esta vacio
     if(e.target.type != 'email') { // si el campo no es de tipo email
       e.target.parentElement.classList.add('success')
+    } else {
+      // validación cuando el campo es de tipo email
+      campoTypeEmail(e)
     }
-    e.target.parentElement.classList.remove('error')
   } else { // si el campo esta vacio
+    if(e.target.parentElement.querySelector('.mensaje-error')) ocultarError(e)
     e.target.parentElement.classList.add('error')
+    mostrarError(e, 'Campo obligatorio')
     if(e.target.parentElement.classList.contains('success')) {
       e.target.parentElement.classList.remove('success')
     }
@@ -52,19 +53,20 @@ function campoObligatorio(e) {
 
 function campoTypeEmail(e) {
   const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
   if(er.test(e.target.value)) {
+    ocultarError(e)
     e.target.parentElement.classList.add('success')
     if(e.target.parentElement.classList.contains('error')) {
       e.target.parentElement.classList.remove('error')
     }
   } else {
     e.target.parentElement.classList.add('error')
+    if(e.target.parentElement.querySelector('.mensaje-error')) ocultarError(e)
+    mostrarError(e, 'Email inválido')
     if(e.target.parentElement.classList.contains('success')) {
       e.target.parentElement.classList.remove('success')
     }
   }
-  
 }
 
 function mostrarError(e, mensaje) {
@@ -79,6 +81,6 @@ function mostrarError(e, mensaje) {
 }
 
 function ocultarError(e) {
-  const mensaje = document.querySelector('.mensaje-error')
+  const mensaje = e.target.parentElement.querySelector('.mensaje-error')
   e.target.parentElement.removeChild(mensaje)
 }

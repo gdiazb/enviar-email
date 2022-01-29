@@ -33,6 +33,22 @@ form {
   border: 1px solid green;
 }
 
+.form__message--success {
+  display: block;
+  text-align: center;
+  color: green;
+  border: 1px solid green;
+  padding: 10px 20px;
+  margin-bottom: 40px;
+}
+
+.form__input--visible {
+  display: block;
+}
+.form__input--hide {
+  display: none;
+}
+
 #loaders {
     text-align: center;
 }

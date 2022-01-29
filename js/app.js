@@ -9,6 +9,8 @@ const inputEmail = document.querySelector('#email')
 const inputAsunto = document.querySelector('#asunto')
 const inputMensaje = document.querySelector('#mensaje')
 
+const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 // Add event listeners
 eventListeners()
 function eventListeners() {
@@ -31,6 +33,10 @@ function iniciarApp() {
 function validarFormulario(e) {
   //campo obligatorio
   campoObligatorio(e)
+  if(er.test(inputEmail.value) && inputAsunto.value != '' && inputMensaje.value != '') {
+    btnEnviar.setAttribute('disabled', false)
+    btnEnviar.classList.remove('opacity-50', 'cursor-not-allowed')
+  }
 }
 
 function campoObligatorio(e) {
@@ -52,7 +58,7 @@ function campoObligatorio(e) {
 }
 
 function campoTypeEmail(e) {
-  const er = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  
   if(er.test(e.target.value)) {
     ocultarError(e)
     e.target.parentElement.classList.add('success')
